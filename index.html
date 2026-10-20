@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="tk">
 <head>
@@ -6,139 +5,85 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Meydan Arena | PUBG Mobile</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b0e13;color:#f5f5f5;font-family:Arial,sans-serif}
-header{padding:20px;background:#151b24;border-bottom:2px solid #f5a623}
-h1{color:#ffb52e;margin:0}main{max-width:850px;margin:auto;padding:18px}
-.card{background:#171d27;border:1px solid #343d4b;border-radius:14px;padding:18px;margin:15px 0}
-input,button{width:100%;padding:13px;margin:6px 0;border-radius:8px;border:1px solid #454f5e;font-size:16px}
-input{background:#0c1118;color:white}button{background:#ffb52e;color:#171717;font-weight:bold;cursor:pointer;border:0}
-.secondary{background:#303947;color:white}.muted{color:#bac2cf}.hidden{display:none}
-.item{border-top:1px solid #343d4b;padding:12px 0}
-#msg{white-space:pre-wrap;color:#ffcf70}
+:root{--bg:#0a0e13;--panel:#151c25;--line:#303b49;--gold:#ffb52e;--text:#f4f6f8;--muted:#aab5c2;--red:#ff6262;--green:#67df9a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;background-image:linear-gradient(180deg,#0a0e13e8,#0a0e13 480px),url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1800&q=80');background-size:cover;background-position:top center}
+header{padding:22px 16px;border-bottom:1px solid #3a3325;background:#0b1017e8;position:sticky;top:0;z-index:2}header .wrap,main{max-width:1000px;margin:auto}h1{margin:0;color:var(--gold);letter-spacing:1px;font-size:clamp(24px,5vw,36px)}header p{margin:7px 0 0;color:var(--muted)}main{padding:16px}.hero{border:1px solid #5b4828;border-radius:18px;padding:24px 20px;background:linear-gradient(100deg,#141b24f5,#141b24bb),url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80') center/cover;margin-bottom:16px}.hero h2{font-size:clamp(25px,6vw,42px);margin:0 0 8px}.hero p{color:#d5dbe2;max-width:650px;line-height:1.5}.tag{display:inline-block;background:#392c14;color:#ffd27a;padding:6px 10px;border-radius:20px;font-size:12px;margin-bottom:10px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;margin:14px 0}.grid .card{margin:0}.card h2,.card h3{margin-top:0}.muted{color:var(--muted);line-height:1.45}.small{font-size:13px}.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#26313d;color:#d9e0e8;font-size:12px}.pill.good{background:#123b2a;color:#8bf0b5}.pill.wait{background:#493715;color:#ffd27a}.pill.bad{background:#4a2024;color:#ffaaaa}input,select,button,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #465362;background:#0d131b;color:var(--text);font-size:15px}button{background:var(--gold);color:#18130a;font-weight:bold;border:0;cursor:pointer}button.secondary{background:#303b49;color:white}button.danger{background:#612a2f;color:white}button:disabled{opacity:.5;cursor:not-allowed}label{display:block;color:#d2d8df;font-size:13px;margin-top:8px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}.hidden{display:none!important}.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.notice{padding:12px;background:#332817;border-radius:9px;color:#ffdc94;line-height:1.45}#message{white-space:pre-wrap;color:#ffcf70;margin:8px 0}footer{text-align:center;padding:25px;color:var(--muted);font-size:12px}.filelink{color:#ffce71;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-<header><h1>⚔ MEYDAN ARENA</h1><p>PUBG MOBILE • Turnuvalar • Rekabet</p></header>
+<header><div class="wrap"><h1>⚔ MEYDAN ARENA</h1><p>PUBG MOBILE • Turnuvalar • Rekabet</p></div></header>
 <main>
-<div class="card">
-<h2>Hesap</h2>
-<p class="muted">E-posta adresin ve şifrenle kayıt ol veya giriş yap.</p>
-<input id="email" type="email" placeholder="Gmail adresin">
-<input id="password" type="password" placeholder="Şifre (en az 6 karakter)">
-<button onclick="signup()">Hesap oluştur</button>
-<button class="secondary" onclick="login()">Giriş yap</button>
-<button class="secondary" onclick="logout()">Çıkış yap</button>
-<p id="msg"></p>
-<p id="who" class="muted">Giriş yapılmadı.</p>
-</div>
-
-<div class="card">
-<h2>🏆 Açık turnuvalar</h2>
-<div id="tournaments">Turnuvalar yükleniyor…</div>
-</div>
-
-<div id="admin" class="card hidden">
-<h2>🔐 Yönetici paneli</h2>
-<p>Yönetici hesabıyla giriş yaptın.</p>
-<input id="tname" placeholder="Turnuva adı">
-<input id="tgame" value="PUBG Mobile" placeholder="Oyun">
-<input id="tstart" type="datetime-local">
-<input id="tfee" type="number" min="0" value="0" placeholder="Katılım ücreti">
-<button onclick="addTournament()">Turnuva ekle</button>
-<p class="muted">Yönetici yetkisi Supabase veritabanında kontrol edilir.</p>
-</div>
+<section class="hero"><span class="tag">BATTLE • COMPETE • WIN</span><h2>Meýdan seni garaşýar.</h2><p>PUBG Mobile turnuvalaryna gatnaş, hasabyňy döred we ýaryşa goşulmak üçin tassyklama al. Turnuva girişleri administrator tarapyndan tassyklanýar.</p></section>
+<div id="message" role="status"></div>
+<section class="grid">
+<div class="card" id="authCard"><h2>Hasap / Giriş</h2><p class="muted small">E-poçta we parol bilen hasap aç. E-poçta tassyklamasy açyk bolsa, gelen haty tassykla.</p><label>E-poçta</label><input id="email" type="email" placeholder="Gmail adresiň" autocomplete="email"><label>Parol</label><input id="password" type="password" placeholder="Iň azy 6 nyşan" autocomplete="current-password"><button id="signupBtn">Hasap döret</button><button class="secondary" id="loginBtn">Giriş</button><button class="secondary hidden" id="logoutBtn">Çykyş</button><div id="accountState" class="muted small">Giriş edilmedi.</div></div>
+<div class="card"><h2>📣 Oýunçy üçin</h2><p class="muted">Hasap açanyňdan soň administrator tassyklamasyna garaş. Tassyklanmadyk hasaplar ýaryşa goşulyp bilmez.</p><div class="notice">Diňe resmi görkezilen töleg maglumatlaryny ulan. Töleg tassyklamasy el bilen geçirilýär.</div></div>
+</section>
+<section class="card"><h2>🏆 Açyk turnuvalar</h2><div id="tournaments" class="muted">Ýüklenýär…</div></section>
+<section class="card hidden" id="playerCard"><h2>👤 Hasabym</h2><div id="playerStatus"></div><div id="joinArea" class="hidden"><h3>Turnuva üçin ýüz tut</h3><label>Turnuva</label><select id="joinTournament"></select><label>Oýunçy ady / PUBG ID</label><input id="playerName" placeholder="Oýunçy ady ýa-da PUBG ID"><button id="joinBtn">Ýüz tut</button><p class="muted small">Ýüz tutma administrator tarapyndan tassyklanar.</p></div><div id="myRequests"></div></section>
+<section class="card hidden" id="paymentCard"><h2>💳 Töleg</h2><p>Telefon belgisi: <strong id="paymentPhone">Administrator belgi girizmedi.</strong></p><p class="muted small">Transferden soň töleg subutnamasyny surat hökmünde ýükläň. Administrator barlap tassyklamasa töleg gutarnykly hasaplanmaýar.</p><label>Turnuva</label><select id="payTournament"></select><label>Töleg mukdary (TMT)</label><input id="payAmount" type="number" min="0" placeholder="Mukdar"><label>Transfer subutnamasy (surat)</label><input id="proof" type="file" accept="image/*"><button id="payBtn">Töleg subutnamasyny iber</button><div id="myPayments"></div></section>
+<section class="card hidden" id="adminCard"><h2>🔐 Administrator paneli</h2><p class="muted small">Diňe profiles tablisasynda role=admin bolan hasap dolandyryp biler.</p>
+<h3>Telefon belgisi / Töleg görkezmesi</h3><label>Transfer üçin telefon belgisi</label><input id="adminPhone" placeholder="+993 ..."><button id="savePhoneBtn">Belgini sakla</button>
+<h3>Turnuva döret</h3><label>Turnuva ady</label><input id="newName" placeholder="Mysal: Solo Night Cup"><div class="row"><div><label>Oýun</label><input id="newGame" value="PUBG Mobile"></div><div><label>Giriş tölegi (TMT)</label><input id="newFee" type="number" min="0" value="0"></div></div><label>Başlangyç wagty</label><input id="newStart" type="datetime-local"><button id="addTournamentBtn">Turnuva goş</button>
+<h3>Grup döret</h3><label>Turnuva</label><select id="adminGroupTournament"></select><label>Grup</label><select id="groupName"><option>A Grubu</option><option>B Grubu</option><option>C Grubu</option><option>Final</option></select><button id="addGroupBtn">Grup goş</button>
+<h3>Maç döret</h3><label>Turnuva</label><select id="adminMatchTournament"></select><label>Grup</label><select id="matchGroup"></select><label>Maç ady</label><input id="matchName" placeholder="A Grubu - Maç 1"><label>Maç wagty</label><input id="matchDate" type="datetime-local"><button id="addMatchBtn">Maç goş</button>
+<h3>Maç netijesini gir</h3><label>Maç</label><select id="resultMatch"></select><div class="row"><div><label>Oýunçy / komanda</label><input id="resultPlayer" placeholder="Oýunçy ady"></div><div><label>Kill sany</label><input id="resultKills" type="number" min="0" value="0"></div></div><div class="row"><div><label>Ýerleşiş puanı</label><input id="placementPoints" type="number" min="0" value="0"></div><div><label>Kill puanı</label><input id="killPoints" type="number" min="0" value="0"></div></div><button id="saveResultBtn">Netijäni sakla</button>
+<h3>Oýunçylar / Hasap tassyklamasy</h3><div id="adminUsers" class="muted">Ýüklenýär…</div>
+<h3>Ýaryşa ýüz tutmalar</h3><div id="adminRequests" class="muted">Ýüklenýär…</div>
+<h3>Tölegler</h3><div id="adminPayments" class="muted">Ýüklenýär…</div>
+</section>
+<footer>Meydan Arena • PUBG Mobile jemgyýeti • Tölegler administrator tarapyndan el bilen barlanýar.</footer>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://hipghindmrfovryxihrj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_X5IUx-vRwOShD65l8B8e-A_zsy3PAbQ";
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const msg = (s) => document.getElementById("msg").textContent = s;
-
-async function signup(){
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  if(!email || password.length<6) return msg("E-posta gir. Şifre en az 6 karakter olmalı.");
-  const {error}=await client.auth.signUp({email,password});
-  if(error) return msg(error.message);
-  msg("Kayıt isteği gönderildi. E-posta doğrulaması istenirse gelen kutunu kontrol et; sonra giriş yap.");
+const READY = SUPABASE_URL.startsWith("https://") && SUPABASE_KEY.startsWith("sb_publishable_");
+const db = READY ? supabase.createClient(SUPABASE_URL,SUPABASE_KEY) : null;
+const $=id=>document.getElementById(id);
+function say(s){$("message").textContent=s||""}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function date(s){return s?new Date(s).toLocaleString():"Wagty bellenmedi"}
+function show(id,yes){$(id).classList.toggle("hidden",!yes)}
+async function requireDb(){if(!READY){say("Supabase baglanyşygy taýýar däl. HTML içindäki Project URL we Publishable key setirlerini doldur.");return false}return true}
+async function getUser(){if(!db)return null;const {data}=await db.auth.getUser();return data.user||null}
+async function getProfile(user){if(!user)return null;const {data,error}=await db.from("profiles").select("id,email,role,approval_status,phone").eq("id",user.id).maybeSingle();if(error){say("Profil ýalňyşlygy: "+error.message);return null}return data}
+async function signup(){if(!await requireDb())return;const email=$("email").value.trim(),password=$("password").value;if(!email||password.length<6)return say("E-poçta gir we azyndan 6 nyşanly parol ulan.");const {error}=await db.auth.signUp({email,password});if(error)return say(error.message);say("Hasap döretmek üçin isleg iberildi. E-poçta tassyklamasy talap edilse, haty tassykla. Soň giriş et.")}
+async function login(){if(!await requireDb())return;const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)return say(error.message);say("Giriş üstünlikli.");await refresh()}
+async function logout(){if(!db)return;const {error}=await db.auth.signOut();if(error)return say(error.message);say("Çykyş edildi.");await refresh()}
+async function loadTournaments(){if(!db){$("tournaments").textContent="Supabase sazlamasy gerek.";return}const {data,error}=await db.from("tournaments").select("id,name,game,start_time,entry_fee,status").eq("status","open").order("created_at",{ascending:false});if(error){$("tournaments").textContent="Turnuvalar ýüklenmedi: "+error.message;return}if(!data?.length){$("tournaments").textContent="Häzir açyk turnuva ýok.";return} $("tournaments").innerHTML=data.map(t=>`<div class="item"><strong>${esc(t.name)}</strong> <span class="pill good">Açyk</span><p class="muted small">${esc(t.game||"PUBG Mobile")} • Giriş: ${esc(t.entry_fee??0)} TMT • ${esc(date(t.start_time))}</p></div>`).join("");["joinTournament","payTournament"].forEach(id=>$(id).innerHTML=data.map(t=>`<option value="${t.id}" data-fee="${esc(t.entry_fee??0)}">${esc(t.name)} — ${esc(t.entry_fee??0)} TMT</option>`).join(""));updateFee();await populateTournamentSelects()}
+function updateFee(){const o=$("payTournament").selectedOptions[0];if(o)$("payAmount").value=o.dataset.fee||0}
+async function join(){const user=await getUser(),profile=await getProfile(user);if(!user)return say("Ilki giriş et.");if(profile?.approval_status!=="approved")return say("Hasabyň heniz tassyklanmady. Administrator tassyklamasyna garaş.");const tournament_id=Number($("joinTournament").value),player_name=$("playerName").value.trim();if(!player_name)return say("Oýunçy adyňy ýa-da PUBG ID-ni gir.");const {error}=await db.from("tournament_requests").insert({user_id:user.id,tournament_id,player_name,status:"pending"});if(error)return say("Ýüz tutma ýalňyşlygy: "+error.message);say("Ýüz tutma iberildi. Administrator jogabyna garaş.");await refresh()}
+async function pay(){const user=await getUser(),profile=await getProfile(user);if(!user)return say("Ilki giriş et.");if(profile?.approval_status!=="approved")return say("Ilki administrator hasabyňy tassyklamaly.");const file=$("proof").files[0],tournament_id=Number($("payTournament").value),amount=Number($("payAmount").value);if(!file)return say("Transfer subutnamasynyň suratyny saýla.");if(!file.type.startsWith("image/")||file.size>5*1024*1024)return say("Diňe surat faýly, iň köp 5 MB.");if(!amount||amount<0)return say("Töleg mukdaryny barla.");const path=user.id+"/"+Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const up=await db.storage.from("payment-proofs").upload(path,file,{upsert:false,contentType:file.type});if(up.error)return say("Surat ýüklenmedi: "+up.error.message);const {error}=await db.from("payments").insert({user_id:user.id,tournament_id,amount,proof_path:path,status:"pending"});if(error)return say("Töleg ýazgysy döredilmedi: "+error.message);say("Töleg subutnamasy iberildi. Administrator barlandan soň tassyklanar.");$("proof").value="";await refresh()}
+async function addTournament(){const user=await getUser();if(!user)return say("Giriş et.");const {data:p}=await db.from("profiles").select("role").eq("id",user.id).maybeSingle();if(p?.role!=="admin")return say("Administrator ygtyýary ýok.");const name=$("newName").value.trim(),game=$("newGame").value.trim()||"PUBG Mobile",fee=Number($("newFee").value||0),start=$("newStart").value;if(!name||fee<0)return say("Turnuva adyny we tölegi barla.");const {error}=await db.from("tournaments").insert({name,game,entry_fee:fee,start_time:start?new Date(start).toISOString():null,status:"open"});if(error)return say(error.message);say("Turnuva goşuldy.");$("newName").value="";await refresh()}
+async function savePhone(){const phone=$("adminPhone").value.trim();const {error}=await db.from("app_settings").upsert({key:"payment_phone",value:phone,updated_at:new Date().toISOString()},{onConflict:"key"});if(error)return say("Telefon belgisi saklanmady: "+error.message);$("paymentPhone").textContent=phone||"Administrator belgi girizmedi.";say("Telefon belgisi saklandy.")}
+async function adminAction(table,id,status){const {error}=await db.from(table).update({status}).eq("id",id);if(error)return say(error.message);say("Üýtgetme saklandy.");await refresh()}
+async function approveUser(id,status){const {error}=await db.from("profiles").update({approval_status:status}).eq("id",id);if(error)return say(error.message);say("Hasap ýagdaýy üýtgedildi.");await refresh()}
+async function signedProof(path){const {data,error}=await db.storage.from("payment-proofs").createSignedUrl(path,300);if(error)return null;return data.signedUrl}
+async function adminLists(){
+ const users=await db.from("profiles").select("id,email,role,approval_status,created_at").order("created_at",{ascending:false});
+ $("adminUsers").innerHTML=users.error?esc(users.error.message):((users.data||[]).map(u=>`<div class="item"><strong>${esc(u.email||u.id)}</strong> <span class="pill ${u.approval_status==="approved"?"good":"wait"}">${esc(u.approval_status||"pending")}</span><p class="muted small">Role: ${esc(u.role)}</p>${u.role!=="admin"?`<div class="row"><button data-user="${u.id}" data-status="approved">Kabul et</button><button class="danger" data-user="${u.id}" data-status="rejected">Ret et</button></div>`:""}</div>`).join("")||"Hasap ýok.");
+ $("adminUsers").querySelectorAll("[data-user]").forEach(b=>b.onclick=()=>approveUser(b.dataset.user,b.dataset.status));
+ const req=await db.from("tournament_requests").select("id,user_id,tournament_id,player_name,status,created_at").order("created_at",{ascending:false});
+ $("adminRequests").innerHTML=req.error?esc(req.error.message):((req.data||[]).map(r=>`<div class="item"><strong>${esc(r.player_name)}</strong><p class="muted small">User: ${esc(r.user_id)} • Turnuva #${esc(r.tournament_id)} • ${esc(r.status)}</p>${r.status==="pending"?`<div class="row"><button data-req="${r.id}" data-status="approved">Kabul et</button><button class="danger" data-req="${r.id}" data-status="rejected">Ret et</button></div>`:""}</div>`).join("")||"Ýüz tutma ýok.");
+ $("adminRequests").querySelectorAll("[data-req]").forEach(b=>b.onclick=()=>adminAction("tournament_requests",b.dataset.req,b.dataset.status));
+ const pays=await db.from("payments").select("id,user_id,tournament_id,amount,proof_path,status,created_at").order("created_at",{ascending:false});
+ $("adminPayments").innerHTML=pays.error?esc(pays.error.message):((pays.data||[]).map(p=>`<div class="item" id="pay-${p.id}"><strong>${esc(p.amount)} TMT</strong> <span class="pill ${p.status==="approved"?"good":"wait"}">${esc(p.status)}</span><p class="muted small">User: ${esc(p.user_id)} • Turnuva #${esc(p.tournament_id)}</p><button class="secondary" data-proof="${esc(p.proof_path)}" data-target="${p.id}">Subutnamany görmek</button><div class="prooflink"></div>${p.status==="pending"?`<div class="row"><button data-pay="${p.id}" data-status="approved">Tassyklamak</button><button class="danger" data-pay="${p.id}" data-status="rejected">Ret etmek</button></div>`:""}</div>`).join("")||"Töleg ýok.");
+ $("adminPayments").querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>adminAction("payments",b.dataset.pay,b.dataset.status));
+ $("adminPayments").querySelectorAll("[data-proof]").forEach(b=>b.onclick=async()=>{const url=await signedProof(b.dataset.proof);const area=$("pay-"+b.dataset.target).querySelector(".prooflink");area.innerHTML=url?`<a class="filelink" target="_blank" rel="noopener" href="${url}">Suraty aç (5 minutlyk link)</a>`:"Subutnama açylmady.";});
 }
+async function loadSettings(){const {data,error}=await db.from("app_settings").select("value").eq("key","payment_phone").maybeSingle();if(!error&&data?.value){$("paymentPhone").textContent=data.value;$("adminPhone").value=data.value}}
+async function playerLists(user){const {data,error}=await db.from("tournament_requests").select("id,tournament_id,player_name,status,created_at").eq("user_id",user.id).order("created_at",{ascending:false});$("myRequests").innerHTML=error?esc(error.message):"<h3>Ýüz tutmalarym</h3>"+((data||[]).map(r=>`<div class="item">${esc(r.player_name)} • Turnuva #${esc(r.tournament_id)} • ${esc(r.status)}</div>`).join("")||"Ýüz tutma ýok.");const {data:payments, error:pe}=await db.from("payments").select("id,tournament_id,amount,status,created_at").eq("user_id",user.id).order("created_at",{ascending:false});$("myPayments").innerHTML=pe?esc(pe.message):"<h3>Töleglerim</h3>"+((payments||[]).map(p=>`<div class="item">${esc(p.amount)} TMT • Turnuva #${esc(p.tournament_id)} • ${esc(p.status)}</div>`).join("")||"Töleg ýok.")}
+async function refresh(){if(!READY){say("HTML-de Project URL we Publishable key bahalaryny giriz.");await loadTournaments();return}await loadTournaments();const user=await getUser();show("authCard",!user);show("logoutBtn",!!user);show("playerCard",!!user);show("paymentCard",!!user);show("adminCard",false);if(!user){$("accountState").textContent="Giriş edilmedi.";return}const p=await getProfile(user);$("accountState").textContent=user.email||"Giriş edildi";if(!p){$("playerStatus").textContent="Profil tapylmady. SQL trigger sazlamasyny barla.";return}const st=p.approval_status||"pending";$("playerStatus").innerHTML=`Hasap ýagdaýy: <span class="pill ${st==="approved"?"good":st==="rejected"?"bad":"wait"}">${esc(st)}</span>`;show("joinArea",st==="approved");if(st==="pending")$("playerStatus").innerHTML+="<p class='muted'>Administrator hasabyňy tassyklamagyna garaş.</p>";if(st==="rejected")$("playerStatus").innerHTML+="<p class='muted'>Hasap tassyklanmady. Administrator bilen habarlaş.</p>";show("adminCard",p.role==="admin");await loadSettings();await playerLists(user);if(p.role==="admin")await adminLists();await populateTournamentSelects()}
 
-async function login(){
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  const {error}=await client.auth.signInWithPassword({email,password});
-  if(error) return msg(error.message);
-  msg("Giriş başarılı.");
-  await refresh();
+async function populateTournamentSelects(){
+ const {data,error}=await db.from("tournaments").select("id,name").order("created_at",{ascending:false});
+ if(error)return;
+ const opts=(data||[]).map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
+ ["groupTournament","boardTournament","adminGroupTournament","adminMatchTournament"].forEach(id=>$(id).innerHTML=opts);
+ await populateGroups(); await populateMatches(); await loadLeaderboard();
 }
-
-async function logout(){
-  const {error}=await client.auth.signOut();
-  if(error) return msg(error.message);
-  msg("Çıkış yapıldı.");
-  await refresh();
-}
-
-async function refresh(){
-  const {data:{user}}=await client.auth.getUser();
-  document.getElementById("who").textContent=user ? "Giriş: "+user.email : "Giriş yapılmadı.";
-  let isAdmin=false;
-  if(user){
-    const {data:profile,error}=await client.from("profiles").select("role").eq("id",user.id).maybeSingle();
-    if(error) msg("Profil kontrolü: "+error.message);
-    isAdmin=profile?.role==="admin";
-  }
-  document.getElementById("admin").classList.toggle("hidden",!isAdmin);
-  await loadTournaments();
-}
-
-async function loadTournaments(){
-  const box=document.getElementById("tournaments");
-  const {data,error}=await client.from("tournaments")
-    .select("id,name,game,start_time,entry_fee,status")
-    .order("created_at",{ascending:false});
-  if(error){box.textContent="Turnuvalar yüklenemedi: "+error.message;return;}
-  if(!data?.length){box.textContent="Henüz turnuva yok.";return;}
-  box.innerHTML="";
-  data.forEach(t=>{
-    const div=document.createElement("div");
-    div.className="item";
-    const title=document.createElement("strong");
-    title.textContent=t.name;
-    const detail=document.createElement("p");
-    detail.className="muted";
-    detail.textContent=(t.game||"PUBG Mobile")+" • Ücret: "+(t.entry_fee??0)+" TMT • Durum: "+t.status+
-      (t.start_time?" • Başlangıç: "+new Date(t.start_time).toLocaleString():"");
-    div.append(title,detail);
-    box.appendChild(div);
-  });
-}
-
-async function addTournament(){
-  const {data:{user}}=await client.auth.getUser();
-  if(!user) return msg("Önce giriş yap.");
-  const {data:profile,error:pError}=await client.from("profiles").select("role").eq("id",user.id).maybeSingle();
-  if(pError || profile?.role!=="admin") return msg("Yönetici yetkisi bulunamadı.");
-  const name=document.getElementById("tname").value.trim();
-  const game=document.getElementById("tgame").value.trim()||"PUBG Mobile";
-  const start=document.getElementById("tstart").value;
-  const fee=Number(document.getElementById("tfee").value||0);
-  if(!name || fee<0) return msg("Turnuva adını ve ücreti kontrol et.");
-  const {error}=await client.from("tournaments").insert({
-    name,game,start_time:start?new Date(start).toISOString():null,
-    entry_fee:fee,status:"open"
-  });
-  if(error) return msg("Eklenemedi: "+error.message);
-  msg("Turnuva eklendi.");
-  document.getElementById("tname").value="";
-  await loadTournaments();
-}
-
-client.auth.onAuthStateChange(()=>{setTimeout(()=>refresh(),0);});
-refresh();
-</script>
-</body>
-</html>
+async function populateGroups(){
+ if(!db)return;
+ const tid=Number($("adminGroupTournament").value||$("groupTournament").value);
+ const {data,error}=await db.from("tournament_groups").select("id,name,tournament_id").eq
